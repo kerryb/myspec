@@ -18,6 +18,10 @@ class MySpec
   def self.eq expected
     EqMatcher.new(expected)
   end
+
+  def self.be_nil
+    NilMatcher.new
+  end
 end
 
 class Expector
@@ -37,6 +41,12 @@ class EqMatcher
 
   def run actual
     raise AssertError.new("Expected: #{@expected.inspect}; got: #{actual.inspect}") unless actual == @expected
+  end
+end
+
+class NilMatcher
+  def run actual
+    raise AssertError.new("Expected #{actual.inspect} to be nil") unless actual.nil?
   end
 end
 
