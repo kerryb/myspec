@@ -32,6 +32,10 @@ class Expector
   def to matcher
     matcher.run @actual
   end
+
+  def not_to matcher
+    matcher.run_negated @actual
+  end
 end
 
 class EqMatcher
@@ -42,11 +46,19 @@ class EqMatcher
   def run actual
     raise AssertError.new("Expected: #{@expected.inspect}; got: #{actual.inspect}") unless actual == @expected
   end
+
+  def run_negated actual
+    raise AssertError.new("Did not expect #{actual.inspect}, but got it") if actual == @expected
+  end
 end
 
 class NilMatcher
   def run actual
     raise AssertError.new("Expected #{actual.inspect} to be nil") unless actual.nil?
+  end
+
+  def run_negated actual
+    raise AssertError.new("Expected value not to be nil") unless actual.nil?
   end
 end
 
