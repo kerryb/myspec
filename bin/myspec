@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path("lib")
+require "my_spec"
+load ARGV[0]
