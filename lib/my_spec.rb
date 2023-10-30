@@ -6,6 +6,8 @@ class MySpec
   def self.it description, &block
     instance_eval &block
     print "."
+  rescue AssertError => e
+    puts "\n#{e.message}\n"
   end
 
   def self.expect actual
@@ -33,6 +35,9 @@ class EqMatcher
   end
 
   def run actual
-    raise "Expected: #{@expected.inspect}; got: #{actual.inspect}" unless actual == @expected
+    raise AssertError.new("Expected: #{@expected.inspect}; got: #{actual.inspect}") unless actual == @expected
   end
+end
+
+class AssertError < RuntimeError
 end
