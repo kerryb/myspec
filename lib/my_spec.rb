@@ -1,5 +1,6 @@
 class MySpec
   def self.describe description, &block
+    @describe = description
     instance_eval &block
   end
 
@@ -7,7 +8,7 @@ class MySpec
     instance_eval &block
     print "\e[32m.\e[0m"
   rescue AssertError => e
-    puts "\n\e[31m#{e.message}\e[0m\n"
+    puts "\n#{@describe} #{description}\n  \e[31m#{e.message}\e[0m\n"
   end
 
   def self.expect actual

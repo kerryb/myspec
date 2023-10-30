@@ -1,4 +1,4 @@
-MySpec.describe "Simple assertions" do
+MySpec.describe "Equality assertion" do
   it "checks a value is as expected" do
     expect(2 + 2).to eq(4)
   end
