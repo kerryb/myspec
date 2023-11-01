@@ -1,14 +1,14 @@
 class MySpec
   def self.describe description, &block
+    @description = description
     instance_eval &block
   end
 
-  def self.it description, &block
-    if instance_eval &block
-      print "\e[32m.\e[0m"
-    else
-      print "\e[31mF\e[0m"
-    end
+  def self.it example, &block
+    instance_eval &block
+    print "\e[32m.\e[0m"
+  rescue AssertionFailure => e
+    puts "\n#{@description} #{example}: \e[31m#{e.message}\e[0m"
   end
 
   def self.expect actual
@@ -26,7 +26,7 @@ class Expector
   end
 
   def to matcher
-    matcher.matches? @actual
+    matcher.call @actual
   end
 end
 
@@ -35,7 +35,10 @@ class EqMatcher
     @expected = expected
   end
 
-  def matches? actual
-    @expected == actual
+  def call actual
+    raise AssertionFailure, "Expected #{@expected.inspect} but got #{actual.inspect}" unless @expected == actual
   end
+end
+
+class AssertionFailure < RuntimeError
 end
