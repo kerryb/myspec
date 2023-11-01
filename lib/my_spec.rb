@@ -21,6 +21,16 @@ class MySpec
   def self.eq expected
     EqMatcher.new(expected)
   end
+
+  def self.let name, &block
+    @lets ||= {}
+    @lets[name] = block
+  end
+
+  def self.method_missing name, &block
+    @let_values ||= {}
+    @let_values[name] ||= instance_eval &@lets[name]
+  end
 end
 
 class Expector

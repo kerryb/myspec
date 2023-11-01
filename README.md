@@ -5,5 +5,6 @@ An attempt at building a very simple rspec clone.
   * Support describe and it/example blocks
   * Allow assertion on equality
   * Support negated assertions
+  * Support let blocks
   * ???
   * Profit!
