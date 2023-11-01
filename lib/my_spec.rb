@@ -29,7 +29,11 @@ class Expector
   end
 
   def to matcher
-    matcher.call @actual
+    matcher.match @actual
+  end
+
+  def not_to matcher
+    matcher.not_match @actual
   end
 end
 
@@ -38,8 +42,12 @@ class EqMatcher
     @expected = expected
   end
 
-  def call actual
+  def match actual
     raise AssertionFailure, "Expected #{@expected.inspect} but got #{actual.inspect}" unless @expected == actual
+  end
+
+  def not_match actual
+    raise AssertionFailure, "Expected #{@expected.inspect} not to equal #{actual.inspect}" if @expected == actual
   end
 end
 
