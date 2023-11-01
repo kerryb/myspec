@@ -11,6 +11,9 @@ class MySpec
     puts "\e[31mF\e[0m\n#{@description} #{example}: \e[31m#{e.message}\e[0m"
   end
 
+  def self.xit *args
+  end
+
   def self.expect actual
     Expector.new(actual)
   end
